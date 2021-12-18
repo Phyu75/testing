@@ -1,0 +1,209 @@
+<DOCTYPE>
+<html>
+<head>
+	<title>Ballon Pop Game</title>
+	<script src="https://kit.fontawesome.com/bbdccb4e58.js" crossorigin="anonymous"></script>
+</head>
+<style>
+	.balloon, .boom{
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		background-color: rgb(255,0,255);
+		display: inline-block;
+
+	}
+	button{
+		margin-bottom: 35px;
+		background: lightpink;
+		padding: 10px;
+		color: white;
+		font-size: 15px;
+		border: 1px solid white;
+		border-radius: 50px;
+	}
+	body{
+		margin: auto;
+		font-family: monospace;
+		text-align: center;
+	}
+	h4{
+		display: none;
+	}
+	#tryAgain{
+		display: none;
+	}
+	h1{
+		font-size: 26px;
+	}
+	details, summary,p{
+		float: left;
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	#hints{
+		display: none;
+	}
+
+</style>
+<body>
+	<h1>Pop the balloons<br> when you click</h1>
+	<div>
+		<button>Time left &nbsp;<i class="fas fa-stopwatch"></i><span id="countdown">20</span>s</button>
+		<button>Score<i class="fas fa-star"></i><span id="score"> 0</span></button>
+		<button id="play"> <i class="fas fa-play"></i>Play</button>
+		<button id="pause"> <i class="fas fa-pause"></i> &nbsp; pause</button>
+		<button id="tryAgain"> <i class="fas fa-redo-alt"></i>Try again</button>
+	</div>
+	<h4>Oops Time just run out!</h4>
+	<div id="balloons">
+		<div class="balloon"></div>
+		<div class="boom"></div>
+		<div class="balloon"></div>
+		<div class="balloon"></div>
+		<br>
+		<div class="boom"></div>
+		<div class="balloon"></div>
+		<div class="balloon"></div>
+		<br>
+		<div class="boom"></div>
+		<div class="balloon"></div>
+		
+</div>
+<details id="credit">
+	<summary>Credits for the sound</summary>
+	<p>I use the sound from online sources especially https://mixkit.co/free-sound-effects/ </p>
+</details>
+
+<details id='hints'>
+	<summary>Some hints</summary>
+	<p>There are 7 ballons and 3 bombs among given ones</p>
+</details>
+
+</body>
+<script>
+	var score=document.getElementById("score");
+	var popped=0;
+	var bombed=0;
+	this.addEventListener("click", (event) => {
+		if (event.target.className == "balloon"){
+			event.target.innerHTML="Pop !";
+			event.target.style.backgroundColor="#ffffff";
+			score.innerHTML ++;
+			popped ++;
+			var pop= new Audio('pop.mp3');
+			pop.play();
+			gameDesicion();
+
+		}else if(event.target.className == "boom"){
+			event.target.innerHTML="Boom!!";
+			event.target.style.backgroundColor="#ffffff";
+			score.innerHTML --;
+			bombed++;
+			var boom= new Audio('boom.wav');
+			boom.play();
+			gameDesicion();
+
+		}
+	});
+	var balloons = document.getElementById('balloons');
+	var text=document.querySelector('h4');
+
+	var play=document.getElementById('play');
+	var pause=document.getElementById('pause');
+	var tryAgain=document.getElementById('tryAgain');
+	var hints=document.getElementById('hints');
+	var credit=document.getElementById('credit');
+	
+
+
+
+	function displayTime(){
+	var time=document.getElementById("countdown");
+	var update = time.innerHTML -- ;
+	if (update == 1){
+		clearInterval(count);
+		balloons.style.display="none";
+		text.style.display="block";
+		play.style.display="none";
+		pause.style.display="none";
+		tryAgain.style.display="inline-block";
+		var timeout= new Audio('timeout.wav');
+		timeout.play();
+		hints.style.display ="inline-block";
+		credit.style.display ="none";
+
+
+
+
+
+
+	}
+}
+    var count = setInterval(displayTime,1000);
+
+function gameDesicion(){
+	if (popped == 6){
+		balloons.style.display="none";
+		text.style.display="block";
+		text.innerHTML="You Win all the ballons are pop!";
+		clearInterval(count);
+
+		play.style.display="none";
+		pause.style.display="none";
+		tryAgain.style.display="inline-block";
+		var winner= new Audio('win.wav');
+		winner.play();
+
+
+	}else if (bombed >=2){
+		balloons.style.display="none";
+		text.style.display="block";
+		text.innerHTML="You Lose! Try again";
+		clearInterval(count);
+
+		play.style.display="none";
+		pause.style.display="none";
+		tryAgain.style.display="inline-block";
+		var loser = new Audio('lose.wav');
+		loser.play();
+		hints.style.display ="inline-block";
+		credit.style.display ="none";
+
+
+
+
+
+
+	}
+	}
+    var gameSound = new Audio("gamesound.mp3");
+
+	tryAgain.addEventListener("click", () => {
+		window.location.reload();
+
+	})
+	
+
+	play.addEventListener("click", () => {
+		
+		gameSound.play();
+		gameSound.loop =true;
+
+	})
+
+	pause.addEventListener("click", () => {
+		
+		gameSound.pause();
+		ameSound.loop =false;
+
+	})
+
+
+
+
+		
+
+
+</script>
+</html>
